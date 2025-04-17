@@ -71,4 +71,14 @@ getWeather(query: string) {
   });
 }
 
+getUvRange(uv: number): string {
+  if (uv === undefined || uv === null) return '';
+  if (uv < 3) return 'Low';
+  else if (uv < 6) return 'Moderate';
+  else if (uv < 8) return 'High';
+  else if (uv < 11) return 'Very High';
+  else return 'Extreme';
+}
+
+
 }

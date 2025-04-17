@@ -1,7 +1,7 @@
 <section class="container">
   <div class="header">
     <div class="search-bar">
-      <input [(ngModel)]="city" type="text" placeholder="Search for city..." (keyup.up)="searchWeather()" />
+      <input [(ngModel)]="city" type="text" placeholder="Search for city..." />
       <button class="search-btn" (click)="searchWeather()">Search</button>
     </div>
   </div>
@@ -42,14 +42,17 @@
           </div>
           <div>
             <p style="color: #666; margin-bottom: 5px">UV Index</p>
-            <p style="font-weight: bold">{{ weatherData.current?.uv }}</p>
+            <p style="font-weight: bold">
+              {{ weatherData.current?.uv }}  ({{ getUvRange(weatherData.current?.uv) }})
+            </p>
           </div>
+          
           <div>
-            <p style="color: #666; margin-bottom: 5px">UV Index</p>
-            <p style="font-weight: bold">{{ weatherData.current?.precip_mm }}</p>
+            <p style="color: #666; margin-bottom: 5px">Precipitation</p>
+            <p style="font-weight: bold">{{ weatherData.current?.precip_mm }}mm</p>
           </div><div>
-            <p style="color: #666; margin-bottom: 5px">UV Index</p>
-            <p style="font-weight: bold">{{ weatherData.current?.dewpoint_c }}</p>
+            <p style="color: #666; margin-bottom: 5px">Dewpoint</p>
+            <p style="font-weight: bold">{{ weatherData.current?.dewpoint_c }}°C</p>
           </div>
         </div>
       </div>
