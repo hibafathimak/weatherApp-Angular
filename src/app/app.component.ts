@@ -37,14 +37,14 @@ export class AppComponent {
         this.getWeather('Kochi');
       });
     } else {
-      this.errorMessage = "Geolocation not supported.";
+      console.log("Geolocation not supported.");
       this.getWeather('Kochi');
     }
   }
   
   searchWeather() {
     if (!this.city.trim()) {
-      this.errorMessage = "Please enter a city name";
+      alert("Please enter a city name");
       return;
     }
     

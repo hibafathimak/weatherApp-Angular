@@ -1,69 +1,80 @@
-<section class="container">
-  <div class="header">
-    <div class="search-bar">
-      <input [(ngModel)]="city" type="text" placeholder="Search for city..." />
-      <button class="search-btn" (click)="searchWeather()">Search</button>
-    </div>
-  </div>
-
-  <div *ngIf="isLoading" class="loading">
-    <p>Loading weather data...</p>
-  </div>
-
-  <div *ngIf="!isLoading && !errorMessage && weatherData.location">
-    <div class="current">
-      <div>
-        <h1>{{ weatherData.location?.name }}</h1>
-        <h5>{{ today | date : "EEEE, MMMM d, y, h:mm a" }}</h5>
-        <h1>{{ weatherData.current?.temp_c }}°C</h1>
-        <h5>Feels like {{ weatherData.current?.feelslike_c }}°C</h5>
-      </div>
-      <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
-        <img [src]="weatherData.current?.condition?.icon" width="100" alt="Weather icon" />
-        <h5>{{ weatherData.current?.condition?.text }}</h5>
+<main>
+  <section class="container">
+    <div class="header">
+      <div class="search-bar">
+        <input [(ngModel)]="city" type="text" placeholder="Search for city..." />
+        <button class="search-btn" (click)="searchWeather()">
+          <i class="fas fa-search" style="margin-right: 8px;"></i>Search
+        </button>
       </div>
     </div>
+    
+    <div *ngIf="isLoading" class="loading">
+      Loading weather data
+    </div>
 
-    <div class="card card-2">
-      <h4>Weather Details</h4>
-      <div class="weather-details">
-        <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 15px; margin-top: 15px;">
-          <div>
-            <p style="color: #666; margin-bottom: 5px">Humidity</p>
-            <p style="font-weight: bold">{{ weatherData.current?.humidity }}%</p>
+    <div *ngIf="errorMessage" class="error">
+      {{errorMessage}}
+    </div>
+    
+    <div *ngIf="!isLoading && !errorMessage && weatherData.location" class="weather-content">
+      <div class="current">
+        <div class="current-info">
+          <h1>{{ weatherData.location?.name }}</h1>
+          <h5>{{ today | date : "EEEE, MMMM d, y, h:mm a" }}</h5>
+          <h1>{{ weatherData.current?.temp_c }}°C</h1>
+        </div>
+        <div class="current-condition">
+          <img [src]="weatherData.current?.condition?.icon" width="100" alt="Weather icon" />
+          <h5>{{ weatherData.current?.condition?.text }}</h5>
+        </div>
+      </div>
+      
+      <div class="card card-2">
+        <h4>Weather Details</h4>
+        <div class="weather-details">
+          <div class="weather-details-grid">
+            <div class="detail-item">
+              <p style="color: #666; margin-bottom: 5px">Humidity</p>
+              <span>{{ weatherData.current?.humidity }}%</span>
+            </div>
+            <div class="detail-item">
+              <p style="color: #666; margin-bottom: 5px">Wind</p>
+              <span>{{ weatherData.current?.wind_kph }} km/h</span>
+            </div>
+            <div class="detail-item">
+              <p style="color: #666; margin-bottom: 5px">Feels Like</p>
+              <span>{{ weatherData.current?.feelslike_c }}°C</span>
+            </div>
+            <div class="detail-item">
+              <p style="color: #666; margin-bottom: 5px">UV Index</p>
+              <span>{{ weatherData.current?.uv }}  ({{ getUvRange(weatherData.current?.uv) }})</span>
+            </div>
+            <div class="detail-item">
+              <p style="color: #666; margin-bottom: 5px">Precipitation</p>
+              <span>{{ weatherData.current?.precip_mm }}mm</span>
+            </div>
+            <div class="detail-item">
+              <p style="color: #666; margin-bottom: 5px">Dewpoint</p>
+              <span>{{ weatherData.current?.dewpoint_c }}°C</span>
+            </div>
           </div>
-          <div>
-            <p style="color: #666; margin-bottom: 5px">Wind</p>
-            <p style="font-weight: bold">{{ weatherData.current?.wind_kph }} km/h</p>
+        </div>
+      </div>
+      
+      <div class="card astro-card">        
+        <h4>Sun Schedule</h4>
+        <div class="astro-info">
+          <div class="sunrise">
+            <p style="font-weight: 600">Sunrise</p>
+            <p>{{ weatherData.forecast?.forecastday[0]?.astro?.sunrise }}</p>
           </div>
-          <div>
-            <p style="color: #666; margin-bottom: 5px">Feels Like</p>
-            <p style="font-weight: bold">{{ weatherData.current?.feelslike_c }}°C</p>
-          </div>
-          <div>
-            <p style="color: #666; margin-bottom: 5px">UV Index</p>
-            <p style="font-weight: bold">
-              {{ weatherData.current?.uv }}  ({{ getUvRange(weatherData.current?.uv) }})
-            </p>
-          </div>
-          
-          <div>
-            <p style="color: #666; margin-bottom: 5px">Precipitation</p>
-            <p style="font-weight: bold">{{ weatherData.current?.precip_mm }}mm</p>
-          </div><div>
-            <p style="color: #666; margin-bottom: 5px">Dewpoint</p>
-            <p style="font-weight: bold">{{ weatherData.current?.dewpoint_c }}°C</p>
+          <div class="sunset">
+            <p style="font-weight: 600">Sunset</p>
+            <p>{{ weatherData.forecast?.forecastday[0]?.astro?.sunset }}</p>
           </div>
         </div>
       </div>
     </div>
-<div class="card">          <div class="sunrise">
-  <p style="font-weight: 600">Sunrise:</p>
-  <p>{{ weatherData.forecast?.forecastday[0]?.astro?.sunrise }}</p>
-</div>
-<div class="sunset">
-  <p style="font-weight: 600">Sunset:</p>
-  <p>{{ weatherData.forecast?.forecastday[0]?.astro?.sunset }}</p>
-</div></div>
-  </div>
-</section>
+  </section>
+</main>

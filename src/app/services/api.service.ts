@@ -12,7 +12,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
   
   getWeatherData(query: string): Observable<any> {
-    const url = `${this.baseUrl}/forecast.json?key=${this.apiKey}&q=${query}&days=1&aqi=yes&alerts=no&dt=2025-04-16`;
+    const url = `${this.baseUrl}/forecast.json?key=${this.apiKey}&q=${query}&days=1&aqi=yes&alerts=no`;
     return this.http.get(url); 
   }
   
